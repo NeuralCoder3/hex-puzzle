@@ -1,12 +1,7 @@
 import React from "react";
 import "./board.css";
 
-const sin60 = 2 / Math.sqrt(3);
 const r = 100;
-
-// const Hex = () => {
-//   return <Hexagon className="hexagon" style={{ stroke: "orange" }} />;
-// };
 
 const Hex = props => {
   const { A, B, text = "", side = "", ...divProps } = props;
@@ -16,7 +11,6 @@ const Hex = props => {
       {...divProps}
       className={`hex ${side}`}
       style={{
-        //border: "1px solid #000",
         boxSizing: "border-box",
         height: "100px",
         width: "100px",
@@ -135,8 +129,6 @@ export function TextBoard(props) {
 
 
 function createBoard(rows,color="white") {
-  // const rosLengthList = [1,4,7,6,7,6,7,4,1];
-
   return rows.map(length => {
     if(length instanceof Array) {
       let arr=[];
@@ -155,32 +147,7 @@ function createBoard(rows,color="white") {
   );
 }
 
-// function put(board, rowIndex, cellIndex, side) {
-//   const newBoard = board.map(row => [...row]);
-//   newBoard[rowIndex][cellIndex] = side;
-//   return newBoard;
-// }
-
-// function changeSide(side) {
-//   return side === "A" ? "B" : "A";
-// }
-
 function reducer(state, action) {
-  // switch (action.type) {
-  //   case "put":
-  //     return {
-  //       ...state,
-  //       board: put(
-  //         state.board,
-  //         action.payload.rowIndex,
-  //         action.payload.cellIndex,
-  //         state.currentSide
-  //       ),
-  //       currentSide: changeSide(state.currentSide)
-  //     };
-  //   default:
-  //     return state;
-  // }
   return state;
 }
 

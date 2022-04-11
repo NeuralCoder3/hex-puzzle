@@ -11,12 +11,10 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
     transformOrigin: "50% 50%"
   });
   const id=useId();
-//   console.log(id);
   let moveable;
   React.useEffect(() => {
     setTarget(document.getElementById(id)! as HTMLElement);
   }, []);
-//   setTarget(document.querySelector(".target")!);
   return (
     <div className="container">
       <div className="target" id={id} style={{"left":props.left,"top":props.top}}>{props.children}</div>
