@@ -1,0 +1,76 @@
+.Board {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+/* .hex {
+  cursor: pointer;
+} */
+
+.hex.red div {
+  background: #ede;
+}
+
+.hex.blue div {
+  background: #dee;
+}
+
+.hex.green div {
+  background: rgb(221, 238, 224);
+}
+
+.hex.blue2 div {
+  background: rgb(199, 207, 224);
+}
+
+.hex.purple div {
+  background: rgb(227, 221, 238);
+}
+
+.hex.magenta div {
+  background: rgb(238, 221, 236);
+}
+
+.hex.orange div {
+  background: rgb(245, 225, 200);
+}
+
+.hex.yellow div {
+  background: rgb(236, 236, 202);
+}
+
+.hex.lime div {
+  background: rgb(216, 223, 198);
+}
+
+.hex.cyan div {
+  background: rgb(186, 221, 198);
+}
+
+.hex.invis div {
+  background: transparent;
+  border-color: transparent !important;
+}
+
+/* .hex:hover div {
+  border-color: #bb9 !important;
+}
+
+.hex:active div {
+  border-color: #faf !important;
+} */
+
+.target {
+    position: absolute;
+    /* width: 100px;
+    height: 100px; */
+    top: 150px;
+    left: 100px;
+    /* line-height: 100px; */
+    text-align: center;
+    /* background: #ee8; */
+    color: #333;
+    font-weight: bold;
+    border: 1px solid #333;
+    box-sizing: border-box;
+}
