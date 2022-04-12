@@ -71,6 +71,12 @@
     /* background: #ee8; */
     color: #333;
     font-weight: bold;
-    border: 1px solid #333;
-    box-sizing: border-box;
+    /* border: 1px solid #333; */
+    /* box-sizing: border-box; */
+}
+
+.moveable-direction {
+  /* display: none !important; */
+  /* background: rgba(40,80,200,20); */
+  background:0x44aaff44 !important;
 }
