@@ -15,6 +15,16 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
   React.useEffect(() => {
     setTarget(document.getElementById(id)! as HTMLElement);
   }, []);
+  let refresh=function(e) {
+    const { translate, rotate, transformOrigin } = frame;
+    e.target.style.transformOrigin = transformOrigin;
+    e.target.style.transform =
+        `translate(${translate[0]}px, ${translate[1]}px)` +
+        ` rotate(${rotate}deg)`;
+  };
+  let snap=function(v, s) {
+    return Math.round(v / s) * s;
+  }
   return (
     <div className="container">
       <div className="target" id={id} style={{"left":props.left,"top":props.top}}>{props.children}</div>
@@ -46,16 +56,14 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
         onDrag={(e) => {
           frame.translate = e.beforeTranslate;
         }}
+        onDragEnd={(e) => {
+          // frame.translate[0]=snap(frame.translate[0],5);
+          // frame.translate[1]=snap(frame.translate[1],5);
+          refresh(e);
+        }}
         onRotateEnd={(e) => {
-            let angle=frame.rotate;
-            angle=60*Math.round(angle/60);
-            frame.rotate = angle;
-
-            const { translate, rotate, transformOrigin } = frame;
-            e.target.style.transformOrigin = transformOrigin;
-            e.target.style.transform =
-                `translate(${translate[0]}px, ${translate[1]}px)` +
-                ` rotate(${rotate}deg)`;
+          frame.rotate=snap(frame.rotate,60);
+          refresh(e);
         }}
         onRotateStart={(e) => {
           e.set(frame.rotate);
@@ -64,11 +72,7 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
           frame.rotate = e.beforeRotate;
         }}
         onRender={(e) => {
-          const { translate, rotate, transformOrigin } = frame;
-          e.target.style.transformOrigin = transformOrigin;
-          e.target.style.transform =
-            `translate(${translate[0]}px, ${translate[1]}px)` +
-            ` rotate(${rotate}deg)`;
+          refresh(e);
         }}
       />
     </div>
