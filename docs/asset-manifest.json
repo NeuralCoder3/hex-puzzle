@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/hex-puzzle/static/css/main.d83ceac2.css",
-    "main.js": "/hex-puzzle/static/js/main.47a0e2eb.js",
+    "main.js": "/hex-puzzle/static/js/main.3e81a2b3.js",
     "static/js/787.fbab8371.chunk.js": "/hex-puzzle/static/js/787.fbab8371.chunk.js",
     "index.html": "/hex-puzzle/index.html",
     "main.d83ceac2.css.map": "/hex-puzzle/static/css/main.d83ceac2.css.map",
-    "main.47a0e2eb.js.map": "/hex-puzzle/static/js/main.47a0e2eb.js.map",
+    "main.3e81a2b3.js.map": "/hex-puzzle/static/js/main.3e81a2b3.js.map",
     "787.fbab8371.chunk.js.map": "/hex-puzzle/static/js/787.fbab8371.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d83ceac2.css",
-    "static/js/main.47a0e2eb.js"
+    "static/js/main.3e81a2b3.js"
   ]
 }
