@@ -3,14 +3,27 @@ import * as React from "react";
 import Moveable from "react-moveable";
 import useId from 'react-use-uuid';
 
+let guid = 0;
+
+function getObjectFromLocalstorage(key, default_value){
+  var value = localStorage.getItem(key);
+  if (value === null){
+    return default_value;
+  }
+  // console.log("Loaded value:", value, "for key:", key);
+  return JSON.parse(value);
+}
+
 export default function Rotate(props: { children: React.ReactNode, top: string, left: string }) {
+  const id="rotateTarget"+(guid++);
+  const storageId="state_"+id;
   const [target, setTarget] = React.useState<HTMLElement>();
-  const [frame, setFrame] = React.useState({
-    translate: [0, 0],
+  const [frame, setFrame] = React.useState(
+    {
+    translate: [0,0],
     rotate: 0,
     transformOrigin: "50% 50%"
   });
-  const id=useId();
   let moveable;
   React.useEffect(() => {
     setTarget(document.getElementById(id)! as HTMLElement);
@@ -21,13 +34,24 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
     e.target.style.transform =
         `translate(${translate[0]}px, ${translate[1]}px)` +
         ` rotate(${rotate}deg)`;
+    window.localStorage.setItem(storageId,JSON.stringify(frame));
+    // console.log("Stored: "+JSON.stringify(frame));
   };
   let snap=function(v, s) {
     return Math.round(v / s) * s;
   }
+  const frameAlt=getObjectFromLocalstorage(storageId,frame);
+  frame.translate=frameAlt.translate;
+  frame.rotate=frameAlt.rotate;
+  frame.transformOrigin=frameAlt.transformOrigin;
+  // console.log("translate: "+frame.translate);
   return (
     <div className="container">
-      <div className="target" id={id} style={{"left":props.left,"top":props.top}}>{props.children}</div>
+      <div className="target" id={id} style={{
+        "left":props.left,
+        "top":props.top,
+        "transform":`translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`,
+    }}>{props.children}</div>
       <Moveable
         ref={ref => moveable=ref}
         target={target}
