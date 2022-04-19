@@ -2,6 +2,7 @@ import { request } from "https";
 import * as React from "react";
 import Moveable from "react-moveable";
 import useId from 'react-use-uuid';
+import { fileURLToPath } from "url";
 
 let guid = 0;
 
@@ -22,6 +23,7 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
     {
     translate: [0,0],
     rotate: 0,
+    scale: 1,
     transformOrigin: "50% 50%"
   });
   let moveable;
@@ -29,10 +31,11 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
     setTarget(document.getElementById(id)! as HTMLElement);
   }, []);
   let refresh=function(e) {
-    const { translate, rotate, transformOrigin } = frame;
+    const { translate, rotate, scale, transformOrigin } = frame;
     e.target.style.transformOrigin = transformOrigin;
     e.target.style.transform =
         `translate(${translate[0]}px, ${translate[1]}px)` +
+        ` scale(${scale},1)` +
         ` rotate(${rotate}deg)`;
     window.localStorage.setItem(storageId,JSON.stringify(frame));
     // console.log("Stored: "+JSON.stringify(frame));
@@ -43,6 +46,7 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
   const frameAlt=getObjectFromLocalstorage(storageId,frame);
   frame.translate=frameAlt.translate;
   frame.rotate=frameAlt.rotate;
+  frame.scale=frameAlt.scale;
   frame.transformOrigin=frameAlt.transformOrigin;
   // console.log("translate: "+frame.translate);
   return (
@@ -50,29 +54,29 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
       <div className="target" id={id} style={{
         "left":props.left,
         "top":props.top,
-        "transform":`translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`,
+        "transform":`translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg) scale(${frame.scale},1)`,
     }}>{props.children}</div>
       <Moveable
         ref={ref => moveable=ref}
         target={target}
-        originDraggable={false}
+        originDraggable={true}
         originRelative={false}
         draggable={true}
         throttleDrag={0}
         startDragRotate={0}
         throttleDragRotate={0}
         zoom={1}
-        origin={false}
+        origin={true}
         padding={{ left: 0, top: 0, right: 0, bottom: 0 }}
         rotatable={true}
         throttleRotate={0}
         rotationPosition={"top"}
         onDragOriginStart={(e) => {
-          e.dragStart && e.dragStart.set(frame.translate);
+          console.log("Origin");
+          frame.scale*=-1;
+          refresh(e);
         }}
         onDragOrigin={(e) => {
-          frame.translate = e.drag.beforeTranslate;
-          frame.transformOrigin = e.transformOrigin;
         }}
         onDragStart={(e) => {
           e.set(frame.translate);
@@ -81,8 +85,6 @@ export default function Rotate(props: { children: React.ReactNode, top: string, 
           frame.translate = e.beforeTranslate;
         }}
         onDragEnd={(e) => {
-          // frame.translate[0]=snap(frame.translate[0],5);
-          // frame.translate[1]=snap(frame.translate[1],5);
           refresh(e);
         }}
         onRotateEnd={(e) => {
